@@ -82,11 +82,26 @@ const scrollBlogPosts = () => {
   for (let i = 0; i < blogPosts.length; i++) {
     if (blogPosts[i].parentElement.getBoundingClientRect().top <= 1) {
       // +1 to account for the first BLOG title div
-      let offset = (blogSectionTop + (window.innerHeight * (i + 1))) * 0.0005;
+      let offset = (blogSectionTop + window.innerHeight * (i + 1)) * 0.0005;
       offset = offset < -1 ? -1 : offset >= 0 ? 0 : offset;
-      if(i == 1) console.log(offset)
       blogPosts[i].style.transform = `scale(${1 + offset})`;
     }
+  }
+};
+
+// Circle animation
+const circleSection = document.querySelector("#circle__section");
+const circle = document.querySelector(".circle");
+
+const scrollCircle = () => {
+  let { top } = circleSection.getBoundingClientRect();
+  let scaleTop = Math.abs(top);
+  let scale = scaleTop / window.innerHeight;
+  scale = scale < 0 ? 0 : scale > 1 ? 1 : scale;
+  if (top <= 0) {
+    circle.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  } else {
+    circle.style.transform = `translate(-50%, -50%) scale(${0})`;
   }
 };
 
@@ -97,6 +112,7 @@ function animate() {
 
 main.addEventListener("scroll", () => {
   scrollBlogPosts();
+  scrollCircle();
 });
 
 animate();
