@@ -1,11 +1,13 @@
 import { lerp } from "./utils.js";
 import { createProjects } from "./projects.js";
+import { createBlogPosts } from "./blogs.js";
 
 const main = document.querySelector("main");
 const video = document.querySelector("video");
 const videoSection = document.querySelector("#video");
 
 createProjects();
+createBlogPosts();
 
 main.addEventListener("scroll", () => {
   animateVideo();
@@ -64,15 +66,37 @@ window.addEventListener("resize", setLimits);
 function animateProjects() {
   let offsetTop = projectsSticky.parentElement.offsetTop;
   let percentage = ((main.scrollTop - offsetTop) / window.innerHeight) * 100;
+  // console.log(main.scrollTop, offsetTop, window.innerHeight)
   percentage = percentage < 0 ? 0 : percentage > limit ? limit : percentage;
   projectTargetX = percentage;
   projectCurrentX = lerp(projectCurrentX, projectTargetX, 0.1);
   projectsSlider.style.transform = `translate3d(${-projectCurrentX}vw, 0, 0)`;
 }
 
+// Post animation
+const blogSection = document.querySelector("#blog");
+const blogPosts = [...document.querySelectorAll(".blog__post")];
+
+const scrollBlogPosts = () => {
+  const blogSectionTop = blogSection.getBoundingClientRect().top;
+  for (let i = 0; i < blogPosts.length; i++) {
+    if (blogPosts[i].parentElement.getBoundingClientRect().top <= 1) {
+      // +1 to account for the first BLOG title div
+      let offset = (blogSectionTop + (window.innerHeight * (i + 1))) * 0.0005;
+      offset = offset < -1 ? -1 : offset >= 0 ? 0 : offset;
+      if(i == 1) console.log(offset)
+      blogPosts[i].style.transform = `scale(${1 + offset})`;
+    }
+  }
+};
+
 function animate() {
   animateProjects();
   requestAnimationFrame(animate);
 }
+
+main.addEventListener("scroll", () => {
+  scrollBlogPosts();
+});
 
 animate();
