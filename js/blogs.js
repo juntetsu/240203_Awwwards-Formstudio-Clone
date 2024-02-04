@@ -23,9 +23,10 @@ const createBlogPosts = () => {
   blogPosts.forEach((post) => {
     const blogPostSection = document.createElement("div");
     blogPostSection.classList.add("blog__post");
-
-    const postDiv = document.createElement("div");
+    
+    const postDiv = document.createElement("a");
     postDiv.classList.add("post");
+    postDiv.href = "/";
 
     const imageContainer = document.createElement("div");
     imageContainer.classList.add("post__image-container");
