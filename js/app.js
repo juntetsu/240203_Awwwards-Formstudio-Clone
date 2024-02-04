@@ -105,6 +105,19 @@ const scrollCircle = () => {
   }
 };
 
+// Discover text animation
+const discoverContainer = document.querySelector(".discover__container");
+const leftText = document.querySelector(".text__left");
+const rightText = document.querySelector(".text__right");
+
+const scrollDiscover = () => {
+  let { bottom } = discoverContainer.getBoundingClientRect();
+  let textTrans = bottom - window.innerHeight;
+  textTrans = textTrans < 0 ? 0 : textTrans;
+  leftText.style.transform = `translateX(${-textTrans}px)`;
+  rightText.style.transform = `translateX(${textTrans}px)`;
+};
+
 function animate() {
   animateProjects();
   requestAnimationFrame(animate);
@@ -113,6 +126,7 @@ function animate() {
 main.addEventListener("scroll", () => {
   scrollBlogPosts();
   scrollCircle();
+  scrollDiscover();
 });
 
 animate();

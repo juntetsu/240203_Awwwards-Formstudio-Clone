@@ -374,6 +374,28 @@ video {
   z-index: 1;
 }
 
+/*====================
+  Discover
+====================*/
+#discover {
+  background-color: var(--white);
+  height: 100%;
+}
+
+.discover__container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+.discover__container p {
+  color: black;
+  will-change: transform;
+  font-size: 1.4rem;
+}
+
 @media only screen and (max-width: 1100px) {
   h3,
   p {
